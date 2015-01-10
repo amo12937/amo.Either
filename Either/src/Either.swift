@@ -11,31 +11,50 @@ import Foundation
 public enum Either<L, R> {
     case Left(@autoclosure() -> L)
     case Right(@autoclosure() -> R)
-}
-
-public func coproduct<L, R, T>(f: L -> T, g: R -> T) -> (Either<L, R> -> T) {
-    return {e in
-        switch(e) {
+    
+    public func left() -> L? {
+        switch self {
         case .Left(let l):
-            return f(l())
-        case .Right(let r):
-            return g(r())
+            return l()
+        case .Right:
+            return nil
         }
     }
-}
+    
+    public func right() -> R? {
+        switch self {
+        case .Left:
+            return nil
+        case .Right(let r):
+            return r()
+        }
+    }
+    
+    public static func coproduct<T>(f: L -> T, g: R -> T) -> (Either<L, R> -> T) {
+        return {e in
+            switch(e) {
+            case .Left(let l):
+                return f(l())
+            case .Right(let r):
+                return g(r())
+            }
+        }
+    }
 
-public func bind<L, R>(l: L) -> Either<L, R> {
-    return .Left(l)
-}
+    public static func bind(l: L) -> Either<L, R> {
+        return .Left(l)
+    }
+    
+    public static func bind(r: R) -> Either<L, R> {
+        return .Right(r)
+    }
+    
+    public static func bindFunc<T>(f: T -> L) -> (T -> Either<L, R>) {
+        return {Either.bind(f($0))}
+    }
+    
+    public static func bindFunc<T>(g: T -> R) -> (T -> Either<L, R>) {
+        return {Either.bind(g($0))}
+    }
 
-public func bind<L, R>(r: R) -> Either<L, R> {
-    return .Right(r)
-}
-
-public func bindFunc<L, R, T>(f: T -> L) -> (T -> Either<L, R>) {
-    return {bind(f($0))}
-}
-
-public func bindFunc<L, R, T>(g: T -> R) -> (T -> Either<L, R>) {
-    return {bind(g($0))}
 }
