@@ -10,6 +10,7 @@
 		B98846321A60FB64001B6D4C /* Either.h in Headers */ = {isa = PBXBuildFile; fileRef = B98846311A60FB64001B6D4C /* Either.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B98846381A60FB64001B6D4C /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B988462C1A60FB64001B6D4C /* Either.framework */; };
 		B988463F1A60FB64001B6D4C /* EitherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B988463E1A60FB64001B6D4C /* EitherTests.swift */; };
+		B988464A1A60FB88001B6D4C /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98846491A60FB88001B6D4C /* Either.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		B98846371A60FB64001B6D4C /* EitherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EitherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B988463D1A60FB64001B6D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B988463E1A60FB64001B6D4C /* EitherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherTests.swift; sourceTree = "<group>"; };
+		B98846491A60FB88001B6D4C /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		B988462E1A60FB64001B6D4C /* Either */ = {
 			isa = PBXGroup;
 			children = (
+				B98846481A60FB6A001B6D4C /* src */,
 				B98846311A60FB64001B6D4C /* Either.h */,
 				B988462F1A60FB64001B6D4C /* Supporting Files */,
 			);
@@ -100,6 +103,14 @@
 				B988463D1A60FB64001B6D4C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B98846481A60FB6A001B6D4C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B98846491A60FB88001B6D4C /* Either.swift */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B988464A1A60FB88001B6D4C /* Either.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +331,7 @@
 		B98846431A60FB64001B6D4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -328,12 +341,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		B98846441A60FB64001B6D4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
