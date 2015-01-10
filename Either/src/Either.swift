@@ -8,14 +8,29 @@
 
 import Foundation
 
+public class Box<T> {
+    let unbox: T
+    init(_ v: T) {
+        self.unbox = v
+    }
+}
+
 public enum Either<L, R> {
-    case Left(@autoclosure() -> L)
-    case Right(@autoclosure() -> R)
+    case Left(Box<L>)
+    case Right(Box<R>)
+    
+    public static func left(l: L) -> Either<L, R> {
+        return .Left(Box<L>(l))
+    }
+    
+    public static func right(r: R) -> Either<L, R> {
+        return .Right(Box<R>(r))
+    }
     
     public func left() -> L? {
         switch self {
-        case .Left(let l):
-            return l()
+        case .Left(let boxed):
+            return boxed.unbox
         case .Right:
             return nil
         }
@@ -25,28 +40,28 @@ public enum Either<L, R> {
         switch self {
         case .Left:
             return nil
-        case .Right(let r):
-            return r()
+        case .Right(let boxed):
+            return boxed.unbox
         }
     }
     
     public static func coproduct<T>(f: L -> T, g: R -> T) -> (Either<L, R> -> T) {
         return {e in
-            switch(e) {
+            switch e {
             case .Left(let l):
-                return f(l())
+                return f(l.unbox)
             case .Right(let r):
-                return g(r())
+                return g(r.unbox)
             }
         }
     }
-
-    public static func bind(l: L) -> Either<L, R> {
-        return .Left(l)
+    
+    public static func bind(l: L) -> Either <L, R> {
+        return .Left(Box<L>(l))
     }
     
-    public static func bind(r: R) -> Either<L, R> {
-        return .Right(r)
+    public static func bind(r: R) -> Either <L, R> {
+        return .Right(Box<R>(r))
     }
     
     public static func bindFunc<T>(f: T -> L) -> (T -> Either<L, R>) {

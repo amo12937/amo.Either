@@ -24,12 +24,12 @@ class EitherTests: XCTestCase {
     
     func test_2つの型のどちらかを保持できる() {
         let n = 1
-        let u = Either<Int, String>.Left(n)
+        let u = Either<Int, String>.left(n)
         XCTAssertEqual(n, u.left()!)
         XCTAssertTrue(u.right() == nil)
         
         let s = "hoge"
-        let v = Either<Int, String>.Right(s)
+        let v = Either<Int, String>.right(s)
         XCTAssertTrue(v.left() == nil)
         XCTAssertEqual(s, v.right()!)
     }
