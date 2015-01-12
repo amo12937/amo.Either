@@ -86,4 +86,30 @@ class EitherTests: XCTestCase {
         XCTAssertTrue(v(l).left() == nil)
         XCTAssertEqual("abc", v(l).right()!)
     }
+    
+    func test_leftFuncはEitherからTへの関数をLからTへの関数に変換する() {
+        let f = {(l: Int) -> Bool in
+            return l > 5
+        }
+        let g = {(r: String) -> Bool in
+            return r.isEmpty
+        }
+        let e = Either<Int, String>.coproduct(f, g)
+        let actual = Either<Int, String>.leftFunc(e)
+        XCTAssertEqual(true, actual(6))
+        XCTAssertEqual(false, actual(5))
+    }
+    
+    func test_rightFuncはEitherからTへの関数をRからTへの関数に変換する() {
+        let f = {(l: Int) -> Bool in
+            return l > 5
+        }
+        let g = {(r: String) -> Bool in
+            return r.isEmpty
+        }
+        let e = Either<Int, String>.coproduct(f, g)
+        let actual = Either<Int, String>.rightFunc(e)
+        XCTAssertEqual(true, actual(""))
+        XCTAssertEqual(false, actual("hoge"))
+    }
 }

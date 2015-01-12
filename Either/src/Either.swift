@@ -72,4 +72,11 @@ public enum Either<L, R> {
         return {Either.bind(g($0))}
     }
 
+    public static func leftFunc<T>(f: Either<L, R> -> T) -> (L -> T) {
+        return {l in f(Either<L, R>.left(l))}
+    }
+    
+    public static func rightFunc<T>(f: Either<L, R> -> T) -> (R -> T) {
+        return {r in f(Either<L, R>.right(r))}
+    }
 }
